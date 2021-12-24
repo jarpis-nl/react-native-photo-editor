@@ -99,7 +99,7 @@ RCT_EXPORT_METHOD(Edit:(nonnull NSDictionary *)props onDone:(RCTResponseSenderBl
 	if (@available(iOS 13, *)) {
             [photoEditor setModalPresentationStyle: UIModalPresentationFullScreen];
         }
-
+/*
         id<UIApplicationDelegate> app = [[UIApplication sharedApplication] delegate];
         UINavigationController *rootViewController = ((UINavigationController*) app.window.rootViewController);
 
@@ -109,8 +109,23 @@ RCT_EXPORT_METHOD(Edit:(nonnull NSDictionary *)props onDone:(RCTResponseSenderBl
         }
 
         [rootViewController presentViewController:photoEditor animated:YES completion:nil];
+ */
+        
+        [[self topMostController] presentViewController:photoEditor animated:YES completion:nil];
     });
 }
+
+- (UIViewController*) topMostController
+{
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+
+    return topController;
+}
+
 
 
 - (CGFloat) colorComponentFrom: (NSString *) string start: (NSUInteger) start length: (NSUInteger) length {
